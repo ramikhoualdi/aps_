@@ -235,14 +235,14 @@ export const uploadDriverFront = imageSource => async dispatch => {
 };
 
 export const updateDriver =
-  (name, front, back) => async dispatch => {
+  (front, back) => async dispatch => {
     try {
       const date = new Date();
       const dateFinal = date.toString().substr(4, 11)
       let currentDate =  `Added on ${dateFinal.substr(0, 3)} ${dateFinal.substr(4, 2)}, ${dateFinal.substr(7, 4)}`
       const uidUser = await auth().currentUser.uid;
       await firestore().doc(`users/${uidUser}`).update({
-        'driverData.name': name,
+        'driverData.name': '',
         'driverData.createdAt': currentDate,
         'driverData.front': front,
         'driverData.back': back,
@@ -468,14 +468,14 @@ export const uploadInsuranceFront = imageSource => async dispatch => {
 };
 
 export const updateInsurance =
-  (name,  front, back) => async dispatch => {
+  (front, back) => async dispatch => {
     try {
       const date = new Date();
       const dateFinal = date.toString().substr(4, 11)
       let currentDate =  `Added on ${dateFinal.substr(0, 3)} ${dateFinal.substr(4, 2)}, ${dateFinal.substr(7, 4)}`
       const uidUser = await auth().currentUser.uid;
       await firestore().doc(`users/${uidUser}`).update({
-        'insuranceData.name': name,
+        'insuranceData.name': '',
         'insuranceData.createdAt': currentDate,
         'insuranceData.front': front,
         'insuranceData.back': back,
