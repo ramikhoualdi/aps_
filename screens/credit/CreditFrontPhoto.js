@@ -14,6 +14,7 @@ import { COLORS } from '../../constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {uploadCreditFront, resetPhotos} from '../../redux/User/user.actions';
 import { RNCamera } from 'react-native-camera';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const PendingView = () => (
   <View
@@ -33,69 +34,49 @@ const mapState = ({user}) => ({
 });
 
 const CreditFrontPhoto = ({navigation}) => {
-  const [imageSource, setImageSource] = useState('');
-
-
   console.log('FROM Credit FRONT PHOTO')
-  console.log('+ + + + + + + + + + + + +')
+  console.log('uploadDriverFrontSuccess =>', uploadCreditFrontSuccess)
+  console.log('errors =>', errors)
 
-  const { uploadCreditFrontSuccess, errors} = useSelector(mapState);
-  const dispatch = useDispatch();
+  const { uploadCreditFrontSuccess, errors} = useSelector(mapState)
+  const dispatch = useDispatch()
+  const [imageSource, setImageSource] = useState('')
+  const [spinner, setSpinner] = useState(false)
 
-  console.log('uploadDriverFrontSuccess =>', uploadCreditFrontSuccess);
-  console.log('errors =>', errors);
-
-
-  const takePicture = async function (camera) {
-    // const camRatios = await camera.getSupportedRatiosAsync();
-    // console.log('SupportedRatio => ',camRatios)
-    // const options = {quality: 0.8, base64: true, ratio: camRatios[1] };
-    const options = {quality: 0.8, base64: true };
-    const data = await camera.takePictureAsync(options)
-    console.log('data ===================>',data.uri)
-    await setImageSource(data.uri)
-    console.log('imageSource ===================>',imageSource)
-    console.log('Success From Taking Picture !!')
-      // .then(() => {
-      //   setImageSource(data.uri);
-      // })
-      // .catch((err) => {
-      //   console.log('Error from catch of takePictureAsync')
-      //   console.log(err)
-      // })
-      // setImageSource(data.uri);
-      // if(data.uri){
-      //   dispatch(uploadDriverFront(data.uri))
-      //   console.log(data.uri)
-      // }
-    // navigation.navigate('DriverBackPhoto')
-  }
-  // const uploadImage = () => {
-  //   if(imageSource){
-  //     dispatch(uploadCreditFront(imageSource))
-  //   }
-  // }
-  // useEffect(() => {
-  //   if(uploadCreditFrontSuccess){
-  //     setImageSource(null)
-  //     dispatch(resetPhotos())
-  //     navigation.navigate('CreditBackPhoto')
-  //   }
-  // }, [uploadCreditFrontSuccess])
   useEffect(() => { 
-    if(imageSource.length > 0){
-      console.log('From useEffect !!')
+    if(imageSource.length > 0 && !uploadCreditFrontSuccess){
       console.log('imageSource From useEffect !! =>',imageSource)
       dispatch(uploadCreditFront(imageSource))
+      let myInterval = setInterval(() => {
+        console.log('spinner Value BEFORE Credit Fr =>', spinner)
+        if(spinner){
+          clearInterval(myInterval)
+        }else{
+          setSpinner(!spinner)
+        }
+      }, 3000)
     }
-  }, [imageSource])
+    if(uploadCreditFrontSuccess){
+      navigation.navigate('CreditBackPhoto')
+    }
+  }, [imageSource, uploadCreditFrontSuccess]) 
 
-  const NextPage = () => {
-    navigation.navigate('CreditBackPhoto')
+  const takePicture = async function (camera) {
+    const options = {quality: 0.8, base64: true }
+    const data = await camera.takePictureAsync(options)
+    console.log('data ===================>',data.uri)
+    console.log('imageSource ===================>',imageSource)
+    console.log('Success From Taking Picture !!')
+    setImageSource(data.uri)
   }
 
   return (
     <ScrollView>
+      <Spinner
+          visible={spinner}
+          textContent={'Uploading...'}
+          textStyle={styles.spinnerTextStyle}
+        />
       <SafeAreaView style={styles.container}>
         <View style={styles.scrollHeight}>
           <ScrollView
@@ -132,7 +113,7 @@ const CreditFrontPhoto = ({navigation}) => {
                     {imageSource.length > 0  ? (
                       <TouchableOpacity    
                         style={styles.nextBtn}
-                        onPress={NextPage()}
+                        // onPress={NextPage()}
                       >
                         <Text style={styles.nextText}>Next</Text>
                       </TouchableOpacity>
@@ -190,6 +171,9 @@ const CreditFrontPhoto = ({navigation}) => {
 export default CreditFrontPhoto;
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: '#FFF'
+  },
   nextBtn: {
     // position: 'absolute',
     // bottom: -50,
@@ -208,10 +192,15 @@ const styles = StyleSheet.create({
 
   },
   currentImage: {
-    height: 180,
-    resizeMode: 'contain',
-    marginTop: -10,
-    transform: [{rotate: '-90deg'}],
+    // height: 180,
+    // resizeMode: 'contain',
+    // marginTop: -10,
+    // transform: [{rotate: '-90deg'}],
+    width: 190,
+    height: 100,
+    borderRadius: 8,
+    marginTop: 25,
+    marginLeft: 45,
   },
   preview: {
     // flex: 1,

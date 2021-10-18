@@ -174,9 +174,13 @@ export const uploadDriveBack = imageSource => async dispatch => {
       const snapshot = await firestore().doc(`users/${uidUser}`).get();
       console.log('SnapShot =>', snapshot.data);
       if (snapshot.exists) {
+        const date = new Date();
+        const dateFinal = date.toString().substr(4, 11)
+        let currentDate =  `Added on ${dateFinal.substr(0, 3)} ${dateFinal.substr(4, 2)}, ${dateFinal.substr(7, 4)}`
         try {
           await firestore().doc(`users/${uidUser}`).update({
             'driverData.back': url,
+            'driverData.createdAt': currentDate,
           });
           dispatch({
             type: userTypes.UPLOAD_DRIVER_BACK_SUCCESS,
@@ -231,12 +235,15 @@ export const uploadDriverFront = imageSource => async dispatch => {
 };
 
 export const updateDriver =
-  (name, date, front, back) => async dispatch => {
+  (name, front, back) => async dispatch => {
     try {
+      const date = new Date();
+      const dateFinal = date.toString().substr(4, 11)
+      let currentDate =  `Added on ${dateFinal.substr(0, 3)} ${dateFinal.substr(4, 2)}, ${dateFinal.substr(7, 4)}`
       const uidUser = await auth().currentUser.uid;
       await firestore().doc(`users/${uidUser}`).update({
         'driverData.name': name,
-        'driverData.createdAt': date,
+        'driverData.createdAt': currentDate,
         'driverData.front': front,
         'driverData.back': back,
       });
@@ -286,9 +293,14 @@ export const uploadCreditBack = imageSource => async dispatch => {
       const snapshot = await firestore().doc(`users/${uidUser}`).get();
       console.log('SnapShot =>', snapshot.data);
       if (snapshot.exists) {
+        const date = new Date();
+        const dateFinal = date.toString().substr(4, 11)
+        let currentDate =  `Added on ${dateFinal.substr(0, 3)} ${dateFinal.substr(4, 2)}, ${dateFinal.substr(7, 4)}`
+
         try {
           await firestore().doc(`users/${uidUser}`).update({
             'creditData.back': url,
+            'creditData.createdAt': currentDate,
           });
           dispatch({
             type: userTypes.UPLOAD_CREDIT_BACK_SUCCESS,
@@ -340,12 +352,15 @@ export const uploadCreditFront = imageSource => async dispatch => {
 };
 
 export const updateCredit =
-  (name, date, front, back) => async dispatch => {
+  (front, back) => async dispatch => {
     try {
-      const uidUser = await auth().currentUser.uid;
+      const date = new Date();
+      const dateFinal = date.toString().substr(4, 11)
+      let currentDate =  `Added on ${dateFinal.substr(0, 3)} ${dateFinal.substr(4, 2)}, ${dateFinal.substr(7, 4)}`
+      const uidUser = auth().currentUser.uid;
       await firestore().doc(`users/${uidUser}`).update({
-        'creditData.name': name,
-        'creditData.createdAt': date,
+        'creditData.name': '',
+        'creditData.createdAt': currentDate,
         'creditData.front': front,
         'creditData.back': back,
       });
@@ -395,9 +410,13 @@ export const uploadInsuranceBack = imageSource => async dispatch => {
       const snapshot = await firestore().doc(`users/${uidUser}`).get();
       console.log('SnapShot =>', snapshot.data);
       if (snapshot.exists) {
+        const date = new Date();
+        const dateFinal = date.toString().substr(4, 11)
+        let currentDate =  `Added on ${dateFinal.substr(0, 3)} ${dateFinal.substr(4, 2)}, ${dateFinal.substr(7, 4)}`
         try {
           await firestore().doc(`users/${uidUser}`).update({
             'insuranceData.back': url,
+            'insuranceData.createdAt': currentDate,
           });
           dispatch({
             type: userTypes.UPLOAD_INSURANCE_BACK_SUCCESS,
@@ -449,12 +468,15 @@ export const uploadInsuranceFront = imageSource => async dispatch => {
 };
 
 export const updateInsurance =
-  (name, date, front, back) => async dispatch => {
+  (name,  front, back) => async dispatch => {
     try {
+      const date = new Date();
+      const dateFinal = date.toString().substr(4, 11)
+      let currentDate =  `Added on ${dateFinal.substr(0, 3)} ${dateFinal.substr(4, 2)}, ${dateFinal.substr(7, 4)}`
       const uidUser = await auth().currentUser.uid;
       await firestore().doc(`users/${uidUser}`).update({
         'insuranceData.name': name,
-        'insuranceData.createdAt': date,
+        'insuranceData.createdAt': currentDate,
         'insuranceData.front': front,
         'insuranceData.back': back,
       });

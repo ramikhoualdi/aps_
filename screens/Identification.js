@@ -12,7 +12,7 @@ import {
 import {COLORS} from '../constants';
 import IconFeather from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchDriverData, fetchCreditData, fetchInsuranceData} from '../redux/User/user.actions';
+import {fetchDriverData, fetchCreditData, fetchInsuranceData, resetPhotos} from '../redux/User/user.actions';
 import { auth } from '../firebase/utils';
 
 
@@ -37,6 +37,7 @@ const Identification = ({navigation}) => {
   // const { name_i, createdAt_i, front_i, back_i } = insuranceData;
 
   useEffect(() => {
+    dispatch(resetPhotos())
     dispatch(fetchDriverData());
     dispatch(fetchCreditData());
     dispatch(fetchInsuranceData());
@@ -80,7 +81,7 @@ const Identification = ({navigation}) => {
               null
             }
             
-            <Text style={styles.caardDate} >{formtDATE(driverData.createdAt)} </Text>
+            <Text style={styles.caardDate} >{driverData.createdAt} </Text>
             {/* <View> */}
               <View 
                 style={styles.imagesContainer}
@@ -135,7 +136,7 @@ const Identification = ({navigation}) => {
               :
               null
             }
-            <Text style={styles.caardDate} >{formtDATE(creditData.createdAt)} </Text>
+            <Text style={styles.caardDate} > {creditData.createdAt} </Text>
             <View>
               <View 
                 style={styles.imagesContainer}
@@ -181,8 +182,16 @@ const Identification = ({navigation}) => {
           style={styles.cardRender}
         >
           <View style={styles.cardRender2}>
-            <Text style={styles.caardTitle} >{insuranceData.name}</Text>
-            <Text style={styles.caardDate} >{formtDATE(insuranceData.createdAt)} </Text>
+          {
+              insuranceData.name
+              ?
+              (
+                  <Text style={styles.caardTitle} >{insuranceData.name}</Text> 
+              )
+              :
+              null
+            }
+            <Text style={styles.caardDate} >{insuranceData.createdAt} </Text>
             <View>
               <View 
                 style={styles.imagesContainer}
@@ -295,18 +304,12 @@ const Identification = ({navigation}) => {
         navigation.navigate('Home')
       });
   }
-
-  // const driverLayout = async () => {
-  //   await driverData
-
-  // }
-
   
   const renderSave = () => {
     if(driverData && creditData && insuranceData){
       return (
         <TouchableOpacity 
-          onPress={handleSave}
+          onPress={() => handleSave()}
         >
           <Text style={styles.signup}>Save</Text>
         </TouchableOpacity>
@@ -567,6 +570,7 @@ const styles = StyleSheet.create({
   },
   caardDate: {
     fontSize: 16,
+    marginBottom: 20,
   },
   caardTitle: {
     fontSize: 18,

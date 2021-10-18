@@ -19,6 +19,10 @@ import ForgetPassword from './ForgetPassword';
 import CreditIdentification from './credit/CreditIdentification'
 import DriverIdentification from './driver/DriverIdentification'
 import InsuranceIdentification from './insurance/InsuranceIdentification'
+// Test
+import CreditId from './credit/CreditId'
+import DriverId from './driver/DriverId'
+import InsuranceId from './insurance/InsuranceId' 
 
 
 export {
@@ -42,5 +46,8 @@ export {
     CreditIdentification,
     DriverIdentification,
     InsuranceIdentification,
-
+    // Test
+    CreditId,
+    DriverId,
+    InsuranceId,
 };

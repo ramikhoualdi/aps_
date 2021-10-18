@@ -14,6 +14,7 @@ import { COLORS } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadDriverFront, resetPhotos } from '../../redux/User/user.actions';
 import { RNCamera } from 'react-native-camera';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const PendingView = () => (
   <View
@@ -33,74 +34,49 @@ const mapState = ({user}) => ({
 });
 
 const DriverFrontPhoto = ({navigation}) => {
-  const [imageSource, setImageSource] = useState('');
-  // console.log(typeof imageSource)
-
   console.log('FROM DRIVER FRONT PHOTO')
-  console.log('+ + + + + + + + + + + + +')
+  console.log('uploadDriverFrontSuccess =>', uploadDriverFrontSuccess)
+  console.log('errors =>', errors)
   
   const { uploadDriverFrontSuccess, errors} = useSelector(mapState);
   const dispatch = useDispatch();
+  const [imageSource, setImageSource] = useState('');
+  const [spinner, setSpinner] = useState(false)
 
-  console.log('uploadDriverFrontSuccess =>', uploadDriverFrontSuccess);
-  console.log('errors =>', errors);
-
+  useEffect(() => { 
+    if(imageSource.length > 0 && !uploadDriverFrontSuccess){
+      console.log('imageSource From useEffect !! =>',imageSource)
+      dispatch(uploadDriverFront(imageSource))
+      let myInterval = setInterval(() => {
+        console.log('spinner Value BEFORE Driver Fr =>', spinner)
+        if(spinner){
+          clearInterval(myInterval)
+        }else{
+          setSpinner(!spinner)
+        }
+      }, 3000)
+    }
+    if(uploadDriverFrontSuccess){
+      navigation.navigate('DriverBackPhoto')
+    }
+  }, [imageSource, uploadDriverFrontSuccess])
+  
   const takePicture = async function (camera) {
-    // const camRatios = await camera.getSupportedRatiosAsync();
-    // console.log('SupportedRatio => ',camRatios)
-    // const options = {quality: 0.8, base64: true, ratio: camRatios[1] };
     const options = {quality: 0.8, base64: true };
     const data = await camera.takePictureAsync(options)
     console.log('data ===================>',data.uri)
-    await setImageSource(data.uri)
     console.log('imageSource ===================>',imageSource)
     console.log('Success From Taking Picture !!')
-      // .then(() => {
-      //   setImageSource(data.uri);
-      // })
-      // .catch((err) => {
-      //   console.log('Error from catch of takePictureAsync')
-      //   console.log(err)
-      // })
-      // setImageSource(data.uri);
-      // if(data.uri){
-      //   dispatch(uploadDriverFront(data.uri))
-      //   console.log(data.uri)
-      // }
-    // navigation.navigate('DriverBackPhoto')
+    setImageSource(data.uri)
   }
-  useEffect(() => { 
-    if(imageSource.length > 0){
-      console.log('From useEffect !!')
-      console.log('imageSource From useEffect !! =>',imageSource)
-      dispatch(uploadDriverFront(imageSource))
-    }
-  }, [imageSource])
-  
-  // useEffect(() => {
-  //   console.log('First useEffect')
-  //   console.log(imageSource)
-  //   if(imageSource){
-  //     // console.log('imageSource line 60 =>',imageSource)
-  //     // dispatch(uploadDriverFront(imageSource))
-  //     console.log('Success Go to redux !!')
-  //   }
-  // }, [imageSource])
-  
-
-  const NextPage = () => {
-    navigation.navigate('DriverBackPhoto')
-  }
-  // useEffect(() => {
-  //   if(uploadDriverFrontSuccess){
-  //     dispatch(resetPhotos())
-  //     setImageSource(null)
-  //     navigation.navigate('DriverBackPhoto')
-  //   }
-  // }, [uploadDriverFrontSuccess])
 
   return (
     <ScrollView>
+      <Spinner
+          visible={spinner}
+          textContent={'Uploading...'}
+          textStyle={styles.spinnerTextStyle}
+        />
       <SafeAreaView style={styles.container}>
         <View style={styles.scrollHeight}>
           <ScrollView
@@ -137,7 +113,7 @@ const DriverFrontPhoto = ({navigation}) => {
                     {imageSource.length > 0  ? (
                       <TouchableOpacity    
                         style={styles.nextBtn}
-                        onPress={NextPage()}
+                        // onPress={NextPage()}
                       >
                         <Text style={styles.nextText}>Next</Text>
                       </TouchableOpacity>
@@ -152,7 +128,6 @@ const DriverFrontPhoto = ({navigation}) => {
               <TouchableOpacity
                 style={styles.getPhoto}
                 // onPress={uploadImage()}
-                // onPress={() => takePicture(camera)}
                 >
               </TouchableOpacity>
             </View>
@@ -163,7 +138,6 @@ const DriverFrontPhoto = ({navigation}) => {
         style={styles.preview}
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.off}
-        aspect={'2:1'}
         androidCameraPermissionOptions={{
           title: 'Permission to use camera',
           message: 'We need your permission to use your camera',
@@ -197,6 +171,9 @@ const DriverFrontPhoto = ({navigation}) => {
 export default DriverFrontPhoto;
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: '#FFF'
+  },
   nextBtn: {
     // position: 'absolute',
     // bottom: -50,
@@ -215,10 +192,15 @@ const styles = StyleSheet.create({
 
   },
   currentImage: {
-    height: 180,
-    resizeMode: 'contain',
-    marginTop: -10,
-    transform: [{rotate: '-90deg'}],
+    // height: 180,
+    // resizeMode: 'contain',
+    // marginTop: -10,
+    // transform: [{rotate: '-90deg'}],
+    width: 190,
+    height: 100,
+    borderRadius: 8,
+    marginTop: 25,
+    marginLeft: 45,
   },
   preview: {
     // flex: 1,

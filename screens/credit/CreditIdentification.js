@@ -29,7 +29,7 @@ const CreditIdentification = ({navigation}) => {
   if (creditDataSuccess){
     dispatch(resetPhotos());
   }
-  const { name, createdAt, front, back } = creditData;
+  const { createdAt, front, back } = creditData;
 
   console.log('<=>=>=>=>')
   console.log('name: ', name)
@@ -39,9 +39,9 @@ const CreditIdentification = ({navigation}) => {
   console.log('<=>=>=>=>')
 
   // const [creditName, onChangeDriverName] = useState(name);
-  const [creditDate, onChangeDriverDate] = useState(createdAt);
-  const [creditFront, onChangeDriverFront] = useState(front);
-  const [creditBack, onChangeDriverBack] = useState(back);
+  // const [creditDate, onChangeDriverDate] = useState(createdAt);
+  // const [creditFront, onChangeDriverFront] = useState(front);
+  // const [creditBack, onChangeDriverBack] = useState(back);
 
   const [imageSource] = useState(`
   <IconMaterialCommunityIcons 
@@ -60,8 +60,8 @@ const CreditIdentification = ({navigation}) => {
   //   onChangeDriverBack(back)
   // }
 
-  console.log('driverFront from DriverIdentification => ',creditFront)
-  console.log('driverBack from DriverIdentification => ',creditBack)
+  console.log('driverFront from DriverIdentification => ',front)
+  console.log('driverBack from DriverIdentification => ',back)
 
   
 
@@ -80,7 +80,7 @@ const CreditIdentification = ({navigation}) => {
 
   const handleDriverSave = () => {
     const date  = new Date();
-    dispatch(updateCredit(driverName, date, driverFront, driverBack));
+    dispatch(updateCredit(date, front, back));
     console.log('Saved !!');
     navigation.navigate('Identification');
   };
@@ -122,6 +122,7 @@ const CreditIdentification = ({navigation}) => {
                   <View
                     style={styles.cardRender}
                   >
+                    <Text style={styles.caardDate} >{creditData.createdAt} </Text>
                     <View style={styles.cardRender2}>
                     
                       <View 
@@ -133,7 +134,7 @@ const CreditIdentification = ({navigation}) => {
                         <Image
                             style={styles.frontImage}
                             source={{
-                              uri: creditData.front,
+                              uri: front,
                             }}
                           />
                           <Text style={styles.bottomImageText} >Front</Text>
@@ -144,7 +145,7 @@ const CreditIdentification = ({navigation}) => {
                         <Image
                             style={styles.frontImage}
                             source={{
-                              uri: creditData.back,
+                              uri: back,
                             }}
                           />
                         <Text style={styles.bottomImageText} >Back</Text>
@@ -170,7 +171,7 @@ const CreditIdentification = ({navigation}) => {
                   </View> */}
                   <TouchableOpacity
                     style={styles.button1}
-                    onPress={handleDriverSave}
+                    onPress={() => handleDriverSave()}
                   >
                     <Text style={styles.signup}>Save</Text>
                   </TouchableOpacity>

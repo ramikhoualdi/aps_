@@ -79,7 +79,7 @@ const DriverIdentification = ({navigation}) => {
   const handleDriverSave = () => {
     const date  = new Date();
     // dispatch(updateDriver(driverName, date, driverFront, driverBack));
-    dispatch(updateDriver(createdAt, front, back));
+    dispatch(updateDriver(date, front, back));
     console.log('Saved !!');
     navigation.navigate('Identification');
   };
@@ -171,7 +171,7 @@ const DriverIdentification = ({navigation}) => {
                   </View> */}
                   <TouchableOpacity
                     style={styles.button1}
-                    onPress={handleDriverSave}
+                    onPress={() => handleDriverSave()}
                   >
                     <Text style={styles.signup}>Save</Text>
                   </TouchableOpacity>

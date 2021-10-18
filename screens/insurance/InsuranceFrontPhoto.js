@@ -14,6 +14,7 @@ import { COLORS } from '../../constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {uploadInsuranceFront, resetPhotos} from '../../redux/User/user.actions';
 import { RNCamera } from 'react-native-camera';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const PendingView = () => (
   <View
@@ -33,59 +34,50 @@ const mapState = ({user}) => ({
 });
 
 const InsuranceFrontPhoto = ({navigation}) => {
-  const [imageSource, setImageSource] = useState('');
-  
-
   console.log('FROM Insurance FRONT PHOTO')
-  console.log('+ + + + + + + + + + + + +')
-
-  const { uploadInsuranceFrontSuccess, errors} = useSelector(mapState);
-  const dispatch = useDispatch();
-
   console.log('uploadInsuranceFrontSuccess =>', uploadInsuranceFrontSuccess);
   console.log('errors =>', errors);
 
+  const { uploadInsuranceFrontSuccess, errors} = useSelector(mapState);
+  const dispatch = useDispatch();
+  const [imageSource, setImageSource] = useState('');
+  const [spinner, setSpinner] = useState(false)
+
+  useEffect(() => { 
+    if(imageSource.length > 0 && !uploadInsuranceFrontSuccess){
+      console.log('imageSource From useEffect !! =>',imageSource)
+      dispatch(uploadInsuranceFront(imageSource))
+      let myInterval = setInterval(() => {
+        console.log('spinner Value BEFORE Insurance Fr =>', spinner)
+        if(spinner){
+          clearInterval(myInterval)
+        }else{
+          setSpinner(!spinner)
+        }
+      }, 3000)
+    }
+    if(uploadInsuranceFrontSuccess){
+      navigation.navigate('InsuranceBackPhoto')
+    }
+  }, [imageSource, uploadInsuranceFrontSuccess]) 
 
   const takePicture = async function (camera) {
-    // const camRatios = await camera.getSupportedRatiosAsync();
-    // console.log('SupportedRatio => ',camRatios)
-    // const options = {quality: 0.8, base64: true, ratio: camRatios[1] };
     const options = {quality: 0.8, base64: true };
     const data = await camera.takePictureAsync(options)
     console.log('data ===================>',data.uri)
-    await setImageSource(data.uri)
     console.log('imageSource ===================>',imageSource)
     console.log('Success From Taking Picture !!')
-      // .then(() => {
-      //   setImageSource(data.uri);
-      // })
-      // .catch((err) => {
-      //   console.log('Error from catch of takePictureAsync')
-      //   console.log(err)
-      // })
-      // setImageSource(data.uri);
-      // if(data.uri){
-      //   dispatch(uploadDriverFront(data.uri))
-      //   console.log(data.uri)
-      // }
-    // navigation.navigate('DriverBackPhoto')
-  }
-
-  useEffect(() => { 
-    if(imageSource.length > 0){
-      console.log('From useEffect !!')
-      console.log('imageSource From useEffect !! =>',imageSource)
-      dispatch(uploadInsuranceFront(imageSource))
-    }
-  }, [imageSource])
-
-
-  const NextPage = () => {
-    navigation.navigate('InsuranceBackPhoto')
+    setImageSource(data.uri)
+    
   }
 
   return (
     <ScrollView>
+      <Spinner
+          visible={spinner}
+          textContent={'Uploading...'}
+          textStyle={styles.spinnerTextStyle}
+        />
       <SafeAreaView style={styles.container}>
         <View style={styles.scrollHeight}>
           <ScrollView
@@ -122,7 +114,7 @@ const InsuranceFrontPhoto = ({navigation}) => {
                     {imageSource.length > 0  ? (
                       <TouchableOpacity    
                         style={styles.nextBtn}
-                        onPress={NextPage()}
+                        // onPress={NextPage()}
                       >
                         <Text style={styles.nextText}>Next</Text>
                       </TouchableOpacity>
@@ -180,6 +172,9 @@ const InsuranceFrontPhoto = ({navigation}) => {
 export default InsuranceFrontPhoto;
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: '#FFF'
+  },
   nextBtn: {
     // position: 'absolute',
     // bottom: -50,
@@ -198,10 +193,15 @@ const styles = StyleSheet.create({
 
   },
   currentImage: {
-    height: 180,
-    resizeMode: 'contain',
-    marginTop: -10,
-    transform: [{rotate: '-90deg'}],
+    // height: 180,
+    // resizeMode: 'contain',
+    // marginTop: -10,
+    // transform: [{rotate: '-90deg'}],
+    width: 190,
+    height: 100,
+    borderRadius: 8,
+    marginTop: 25,
+    marginLeft: 45,
   },
   preview: {
     // flex: 1,

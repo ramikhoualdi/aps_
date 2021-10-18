@@ -54,27 +54,6 @@ const TouchIDAuth = ({navigation}) => {
       .catch(error => {
         console.log({error});
       });
-
-    // TouchID.isSupported()
-    // .then(biometryType => {
-    //   // Success code
-    //   if (biometryType === 'FaceID') {
-    //     console.log('FaceID is supported.');
-    //   } else {
-    //     console.log('TouchID is supported.');
-    //     TouchID.authenticate("Authenticate", optionalConfigObject)
-    //       .then(success => {
-    //         Alert.alert('Authenticated Successfully');
-    //       })
-    //       .catch(error => {
-    //         Alert.alert('Authentication Failed', error.toString());
-    //       });
-    //   }
-    // })
-    // .catch(error => {
-    //   // Failure code
-    //   console.log(error);
-    // });
   };
 
   return (
@@ -99,7 +78,7 @@ const TouchIDAuth = ({navigation}) => {
           </Text>
         </View>
         <View style={styles.content}>
-          <TouchableOpacity style={styles.button1} onPress={handleTouchID}>
+          <TouchableOpacity style={styles.button1} onPress={() => handleTouchID()}>
             <Text style={styles.signup}>Continue Touch ID</Text>
           </TouchableOpacity>
         </View>

@@ -35,9 +35,9 @@ const InsuranceIdentification = ({navigation}) => {
   console.log('<=>=>=>=>')
 
   // const [insuranceName, onChangeDriverName] = useState(name);
-  const [insuranceDate, onChangeDriverDate] = useState(createdAt);
-  const [insuranceFront, onChangeDriverFront] = useState(front);
-  const [insuranceBack, onChangeDriverBack] = useState(back);
+  // const [insuranceDate, onChangeDriverDate] = useState(createdAt);
+  // const [insuranceFront, onChangeDriverFront] = useState(front);
+  // const [insuranceBack, onChangeDriverBack] = useState(back);
 
   const [imageSource] = useState(`
   <IconMaterialCommunityIcons 
@@ -57,8 +57,8 @@ const InsuranceIdentification = ({navigation}) => {
   //   onChangeDriverBack(back)
   // }
 
-  console.log('driverFront from DriverIdentification => ',insuranceFront)
-  console.log('driverBack from DriverIdentification => ',insuranceBack)
+  console.log('driverFront from DriverIdentification => ',front)
+  console.log('driverBack from DriverIdentification => ',back)
 
   
   dispatch(fetchInsuranceData());
@@ -78,7 +78,7 @@ const InsuranceIdentification = ({navigation}) => {
 
   const handleDriverSave = () => {
     const date  = new Date();
-    dispatch(updateInsurance(driverName, date, driverFront, driverBack));
+    dispatch(updateInsurance( date, front, back));
     console.log('Saved !!');
     navigation.navigate('Identification');
   };
@@ -131,7 +131,7 @@ const InsuranceIdentification = ({navigation}) => {
                           <Image
                               style={styles.frontImage}
                               source={{
-                                uri: insuranceFront,
+                                uri: front,
                               }}
                             />
                             <Text style={styles.bottomImageText} >Front</Text>
@@ -142,7 +142,7 @@ const InsuranceIdentification = ({navigation}) => {
                           <Image
                               style={styles.frontImage}
                               source={{
-                                uri: insuranceBack,
+                                uri: back,
                               }}
                             />
                           <Text style={styles.bottomImageText} >Back</Text>
@@ -168,7 +168,7 @@ const InsuranceIdentification = ({navigation}) => {
                   </View> */}
                   <TouchableOpacity
                     style={styles.button1}
-                    onPress={handleDriverSave}
+                    onPress={() => handleDriverSave()}
                   >
                     <Text style={styles.signup}>Save</Text>
                   </TouchableOpacity>

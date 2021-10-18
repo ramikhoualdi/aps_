@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Provider} from 'react-redux';
@@ -25,13 +25,16 @@ import {
   CreditIdentification,
   DriverIdentification,
   InsuranceIdentification,
+  // Test
+  CreditId,
+  DriverId,
+  InsuranceId,
 } from './screens';
 import auth from '@react-native-firebase/auth';
 
 const Stack = createStackNavigator();
 
 const App = () => {
-
   // useEffect(() => {
   //   if(auth().currentUser){
   //     console.log('User Changed !!')
@@ -60,49 +63,83 @@ const App = () => {
           initialeRouteName="Home"
           screenOptions={{
             headerShown: false,
-          }}
-          >
-            {
-              !user
-              ?
+          }}>
+          {
+            // !user
+            !user ? (
               <>
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Registration" component={Registration} />
                 {/* OTP */}
                 <Stack.Screen name="VerifyAccount" component={VerifyAccount} />
-                <Stack.Screen name="MobileVerified" component={MobileVerified} />
+                <Stack.Screen
+                  name="MobileVerified"
+                  component={MobileVerified}
+                />
                 {/* Forget Password */}
-                <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+                <Stack.Screen
+                  name="ForgetPassword"
+                  component={ForgetPassword}
+                />
                 {/* <Stack.Screen name="TouchIDAuth" component={TouchIDAuth} />
                 <Stack.Screen name="FaceIDAuth" component={FaceIDAuth} />
                 <Stack.Screen name="TouchIDSuccess" component={TouchIDSuccess} />
                 <Stack.Screen name="FaceIDSuccess" component={FaceIDSuccess} /> */}
               </>
-              :
+            ) : (
               <>
+                {/* <Stack.Screen name="CreditIdentification" component={CreditIdentification} /> */}
                 {/* Touch & Face ID */}
                 <Stack.Screen name="TouchIDAuth" component={TouchIDAuth} />
                 <Stack.Screen name="FaceIDAuth" component={FaceIDAuth} />
-                <Stack.Screen name="TouchIDSuccess" component={TouchIDSuccess} />
+                <Stack.Screen
+                  name="TouchIDSuccess"
+                  component={TouchIDSuccess}
+                />
                 <Stack.Screen name="FaceIDSuccess" component={FaceIDSuccess} />
                 {/* Touch & Face ID */}
-                <Stack.Screen name="Identification" component={Identification} />
+                <Stack.Screen
+                  name="Identification"
+                  component={Identification}
+                />
                 {/* Credit */}
-                <Stack.Screen name="CreditFrontPhoto" component={CreditFrontPhoto} />
-                <Stack.Screen name="CreditBackPhoto" component={CreditBackPhoto} />
+                <Stack.Screen
+                  name="CreditFrontPhoto"
+                  component={CreditFrontPhoto}
+                />
+                <Stack.Screen
+                  name="CreditBackPhoto"
+                  component={CreditBackPhoto}
+                />
+                <Stack.Screen name="CreditId" component={CreditId} />
+                {/* <Stack.Screen name="CreditIdentification" component={CreditIdentification} /> */}
                 {/* Driver */}
-                <Stack.Screen name="DriverFrontPhoto" component={DriverFrontPhoto} />
-                <Stack.Screen name="DriverBackPhoto" component={DriverBackPhoto} />
+                <Stack.Screen
+                  name="DriverFrontPhoto"
+                  component={DriverFrontPhoto}
+                />
+                <Stack.Screen
+                  name="DriverBackPhoto"
+                  component={DriverBackPhoto}
+                />
+                <Stack.Screen name="DriverId" component={DriverId} />
+                {/* <Stack.Screen name="DriverIdentification" component={DriverIdentification} /> */}
                 {/* Insurance */}
-                <Stack.Screen name="InsuranceFrontPhoto" component={InsuranceFrontPhoto} />
-                <Stack.Screen name="InsuranceBackPhoto" component={InsuranceBackPhoto} />
-                {/* Identifications */}
-                <Stack.Screen name="CreditIdentification" component={CreditIdentification} />
-                <Stack.Screen name="DriverIdentification" component={DriverIdentification} />
-                <Stack.Screen name="InsuranceIdentification" component={InsuranceIdentification} />
+                <Stack.Screen
+                  name="InsuranceFrontPhoto"
+                  component={InsuranceFrontPhoto}
+                />
+                <Stack.Screen
+                  name="InsuranceBackPhoto"
+                  component={InsuranceBackPhoto}
+                />
+                <Stack.Screen name="InsuranceId" component={InsuranceId} />
+                {/* <Stack.Screen name="InsuranceIdentification" component={InsuranceIdentification} /> */}
+                {/* Test */}
               </>
-            }
+            )
+          }
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
