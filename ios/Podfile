@@ -13,7 +13,7 @@ target 'aps_app' do
   )
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
+  pod 'GoogleSignIn', '~> 4.4.0' // RNGoogleSignin requires GoogleSignIn >= 4.3.0
   target 'aps_appTests' do
     inherit! :complete
     # Pods for testing
