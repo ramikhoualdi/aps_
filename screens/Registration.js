@@ -15,7 +15,7 @@ import CheckBox from '@react-native-community/checkbox';
 import { COLORS } from '../constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {signUpUser, resetAllAuthForms} from '../redux/User/user.actions';
-import TouchID from 'react-native-touch-id';
+// import TouchID from 'react-native-touch-id';
 
 const mapState = ({user}) => ({
   currentUser: user.currentUser,
@@ -74,25 +74,25 @@ const Registration = ({navigation}) => {
   useEffect(() => {
     console.log('INSODE USEEFFECT 1')
     if (currentUser) {
-      TouchID.isSupported(optionalConfigObject)
-          .then(biometryType => {
-            // Success code
-            if (biometryType === 'FaceID') {
-                console.log('FaceID is supported.');
-                navigation.navigate('Identification');
-            } if(biometryType === 'TouchID'){
-                console.log('TouchID is supported.');
-                navigation.navigate('TouchIDAuth');
-            } else {
-                console.log('TouchID is supported.');
-                navigation.navigate('Identification');
-            }
-          })
-          .catch(error => {
-            // Failure code
-            console.log(error);
-            navigation.navigate('Identification');
-          });
+      // TouchID.isSupported(optionalConfigObject)
+      //     .then(biometryType => {
+      //       // Success code
+      //       if (biometryType === 'FaceID') {
+      //           console.log('FaceID is supported.');
+      //           navigation.navigate('Identification');
+      //       } if(biometryType === 'TouchID'){
+      //           console.log('TouchID is supported.');
+      //           navigation.navigate('TouchIDAuth');
+      //       } else {
+      //           console.log('TouchID is supported.');
+      //           navigation.navigate('Identification');
+      //       }
+      //     })
+      //     .catch(error => {
+      //       // Failure code
+      //       console.log(error);
+      //     });
+        navigation.navigate('Identification');
        
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

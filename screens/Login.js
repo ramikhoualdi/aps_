@@ -14,7 +14,7 @@ import IconEntypo from 'react-native-vector-icons/Entypo';
 import { COLORS } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInUser,resetAllAuthForms } from '../redux/User/user.actions';
-import TouchID from 'react-native-touch-id';
+// import TouchID from 'react-native-touch-id';
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
@@ -50,23 +50,23 @@ const Registration = ({navigation}) => {
     if (signInSuccess){
         ResetForm();
         dispatch(resetAllAuthForms());
-        TouchID.isSupported(optionalConfigObject)
-          .then(biometryType => {
-            // Success code
-            if (biometryType === 'FaceID') {
-                console.log('FaceID is supported.');
-                navigation.navigate('Identification');
-            } else {
-                console.log('TouchID is supported.');
-                navigation.navigate('TouchIDAuth');
-            }
-          })
-          .catch(error => {
-            // Failure code
-            console.log(error);
-            navigation.navigate('Identification');
-          });
-        
+        // TouchID.isSupported(optionalConfigObject)
+        //   .then(biometryType => {
+        //     // Success code
+        //     if (biometryType === 'FaceID') {
+        //         console.log('FaceID is supported.');
+        //         navigation.navigate('Identification');
+        //     } else {
+        //         console.log('TouchID is supported.');
+        //         navigation.navigate('TouchIDAuth');
+        //     }
+        //   })
+        //   .catch(error => {
+        //     // Failure code
+        //     console.log(error);
+        //     navigation.navigate('Identification');
+        //   });
+          navigation.navigate('Identification');
     }
 // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [signInSuccess]);

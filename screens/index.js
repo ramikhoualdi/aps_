@@ -4,10 +4,10 @@ import Login from './Login';
 import Registration from './Registration';
 import VerifyAccount from './VerifyAccount';
 import MobileVerified from './MobileVerified';
-import TouchIDAuth from './TouchIDAuth';
-import FaceIDAuth from './FaceIDAuth';
-import TouchIDSuccess from './TouchIDSuccess';
-import FaceIDSuccess from './FaceIDSuccess';
+// import TouchIDAuth from './TouchIDAuth';
+// import FaceIDAuth from './FaceIDAuth';
+// import TouchIDSuccess from './TouchIDSuccess';
+// import FaceIDSuccess from './FaceIDSuccess';
 import Identification from './Identification';
 import CreditFrontPhoto from './credit/CreditFrontPhoto';
 import CreditBackPhoto from './credit/CreditBackPhoto';
@@ -24,17 +24,16 @@ import CreditId from './credit/CreditId'
 import DriverId from './driver/DriverId'
 import InsuranceId from './insurance/InsuranceId' 
 
-
 export {
     Home,
     Login,
     Registration,
     VerifyAccount,
     MobileVerified,
-    TouchIDAuth,
-    FaceIDAuth,
-    TouchIDSuccess,
-    FaceIDSuccess,
+    // TouchIDAuth,
+    // FaceIDAuth,
+    // TouchIDSuccess,
+    // FaceIDSuccess,
     Identification,
     CreditFrontPhoto,
     CreditBackPhoto,

@@ -10,10 +10,10 @@ import {
   Registration,
   VerifyAccount,
   MobileVerified,
-  TouchIDAuth,
-  FaceIDAuth,
-  TouchIDSuccess,
-  FaceIDSuccess,
+  // TouchIDAuth,
+  // FaceIDAuth,
+  // TouchIDSuccess,
+  // FaceIDSuccess,
   Identification,
   CreditFrontPhoto,
   CreditBackPhoto,
@@ -82,22 +82,15 @@ const App = () => {
                   name="ForgetPassword"
                   component={ForgetPassword}
                 />
-                {/* <Stack.Screen name="TouchIDAuth" component={TouchIDAuth} />
-                <Stack.Screen name="FaceIDAuth" component={FaceIDAuth} />
-                <Stack.Screen name="TouchIDSuccess" component={TouchIDSuccess} />
-                <Stack.Screen name="FaceIDSuccess" component={FaceIDSuccess} /> */}
               </>
             ) : (
               <>
                 {/* <Stack.Screen name="CreditIdentification" component={CreditIdentification} /> */}
                 {/* Touch & Face ID */}
-                <Stack.Screen name="TouchIDAuth" component={TouchIDAuth} />
+                {/* <Stack.Screen name="TouchIDAuth" component={TouchIDAuth} />
                 <Stack.Screen name="FaceIDAuth" component={FaceIDAuth} />
-                <Stack.Screen
-                  name="TouchIDSuccess"
-                  component={TouchIDSuccess}
-                />
-                <Stack.Screen name="FaceIDSuccess" component={FaceIDSuccess} />
+                <Stack.Screen name="TouchIDSuccess" component={TouchIDSuccess} />
+                <Stack.Screen name="FaceIDSuccess" component={FaceIDSuccess} /> */}
                 {/* Touch & Face ID */}
                 <Stack.Screen
                   name="Identification"
